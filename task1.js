@@ -29,26 +29,24 @@ const symmetryDifference = (a, b) => {
 	return Array.from(new Set(con))
 }
 const powerSet = a => {
-	const result = []
-
-	return result
+	return new Set(a).size
 }
 const decarto = (a, b) => {
 	const result = []
-	for (let i = 0; i < a.length - 1; i++) {
-		for (let j = 0; j < a.length + 1; j++) {
+	for (let i = 0; i < a.length; i++) {
+		for (let j = 0; j < b.length; j++) {
 			result.push([a[i], b[j]])
 		}
 	}
 	return result
 }
 const main = (a, b) => {
-	// console.log(join(a, b))
-	// console.log(intersect(a, b))
-	// console.log(difference(a, b))
-	// console.log(symmetryDifference(a, b))
+	console.log(join(a, b))
+	console.log(intersect(a, b))
+	console.log(difference(a, b))
+	console.log(symmetryDifference(a, b))
 	console.log(powerSet([1, 2, 3]))
-	// console.log(decarto(a, b))
+	console.log(decarto(a, b))
 	console.log('main')
 }
 main([1, 4, 5, 7, 8], [2, 4, 1, 5, 7, 9])
