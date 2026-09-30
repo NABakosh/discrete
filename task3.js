@@ -46,6 +46,7 @@ const isTransitive = matrix => {
 	}
 	return true
 }
+
 console.log('Рефлексивность:', isReflexive(M))
 console.log('Симметричность:', isSymmetry(M))
 console.log('Антисимметричность:', isAntiSymmetry(M))

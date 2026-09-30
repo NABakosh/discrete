@@ -19,6 +19,7 @@
 	},
 	"homepage": "https://github.com/NABakosh/discrete#readme",
 	"dependencies": {
+		"bootstrap": "^5.3.8",
 		"nodemon": "^3.1.14"
 	}
 }
