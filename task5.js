@@ -1,12 +1,13 @@
 const AND = (x, y) => +(x && y)
 const OR = (x, y) => +(x || y)
 const NOT = x => +!x
-const IMP = (x, y) => +(!x || y) // x → y
-const EQV = (x, y) => +(x === y) // x ~ y
+const IMP = (x, y) => +(!x || y)
+const EQV = (x, y) => +(x === y)
 const XOR = (x, y) => +(x !== y)
-
-const f = (x, y) => NOT(AND(x, y)) // ¬(x ∧ y)
-const g = (x, y) => OR(NOT(x), NOT(y)) // ¬x ∨ ¬y
+const x = [0, 1, 0, 1, 0, 1]
+const y = [0, 1, 1, 1, 0, 0]
+const f = (x, y) => NOT(AND(x, y))
+const g = (x, y) => OR(NOT(x), NOT(y))
 
 console.log('f(1, 0) =', f(1, 0))
 

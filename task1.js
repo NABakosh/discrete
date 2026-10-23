@@ -49,4 +49,4 @@ const main = (a, b) => {
 	console.log(decarto(a, b))
 	console.log('main')
 }
-main([1, 4, 5, 7, 8], [2, 4, 1, 5, 7, 9])
+main([1, 0, 2, 3, 5], [5, 3, 3, 3, 6, 7])

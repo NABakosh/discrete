@@ -1,50 +1,54 @@
-const table = [
-	[0, 0, 0],
-	[0, 1, 1],
-	[1, 0, 1],
-	[1, 1, 0],
-]
+const truthTable = [0, 1, 1, 0]
 
-function lit(name, value) {
-	if (value === 1) return name
-	return '¬' + name
+const sdnfTerms = []
+const sknfTerms = []
+
+let index = 0
+for (let a = 0; a <= 1; a++) {
+	for (let b = 0; b <= 1; b++) {
+		const value = truthTable[index]
+
+		if (value === 1) {
+			const termA = a === 1 ? 'A' : '!A'
+			const termB = b === 1 ? 'B' : '!B'
+			sdnfTerms.push(`(${termA} && ${termB})`)
+		} else {
+			const termA = a === 0 ? 'A' : '!A'
+			const termB = b === 0 ? 'B' : '!B'
+			sknfTerms.push(`(${termA} || ${termB})`)
+		}
+
+		index++
+	}
 }
 
-function sdnf(table) {
+const sdnf = sdnfTerms.length > 0 ? sdnfTerms.join(' || ') : 'отсутствует'
+const sknf = sknfTerms.length > 0 ? sknfTerms.join(' && ') : 'отсутствует'
+
+console.log('СДНФ: ' + sdnf)
+console.log('СКНФ: ' + sknf)
+console.log('Минимизированная форма: ' + minimizeTwoVar(truthTable))
+
+function minimizeTwoVar(table) {
+	if (table.every(v => v === 0)) return '0'
+	if (table.every(v => v === 1)) return '1'
+
 	const terms = []
-	for (const [x, y, f] of table) {
-		if (f === 1) {
-			terms.push('(' + lit('x', x) + ' ∧ ' + lit('y', y) + ')')
-		}
-	}
-	return terms.join(' ∨ ')
-}
 
-function sknf(table) {
-	const terms = []
-	for (const [x, y, f] of table) {
-		if (f === 0) {
-			terms.push('(' + lit('x', 1 - x) + ' ∨ ' + lit('y', 1 - y) + ')')
-		}
-	}
-	return terms.join(' ∧ ')
-}
+	if (table[2] === 1 && table[3] === 1) terms.push('A')
+	if (table[1] === 1 && table[3] === 1) terms.push('B')
+	if (table[0] === 1 && table[1] === 1) terms.push('!A')
+	if (table[0] === 1 && table[2] === 1) terms.push('!B')
 
-function minimize(table) {
-	const ones = table.filter(r => r[2] === 1)
-	const result = []
-
-	for (let i = 0; i < ones.length; i++) {
-		for (let j = i + 1; j < ones.length; j++) {
-			if (ones[i][0] === ones[j][0]) result.push(lit('x', ones[i][0]))
-			if (ones[i][1] === ones[j][1]) result.push(lit('y', ones[i][1]))
-		}
+	if (terms.length > 0) {
+		return terms.join(' || ')
 	}
 
-	if (result.length === 0) return sdnf(table)
-	return [...new Set(result)].join(' ∨ ')
-}
+	const minterms = []
+	if (table[0] === 1) minterms.push('(!A && !B)')
+	if (table[1] === 1) minterms.push('(!A && B)')
+	if (table[2] === 1) minterms.push('(A && !B)')
+	if (table[3] === 1) minterms.push('(A && B)')
 
-console.log('СДНФ:', sdnf(table))
-console.log('СКНФ:', sknf(table))
-console.log('Минимизация:', minimize(table))
+	return minterms.join(' || ')
+}
